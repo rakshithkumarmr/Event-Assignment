@@ -1,0 +1,45 @@
+{% extends 'basic.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+{% load static %}
+    {%  if ids %}
+    <h2 style="margin-left: 13%;padding-top: 2%;font-family: 'Lemonada', cursive;color: #0d0f91">Liked Events</h2>
+        <div class="row" style="margin-left: 13%">
+            {% for x in events %}
+                {% if x.id in ids %}
+	            <div class="card" style="width: 50rem">
+                <img  src="{{ x.img.url }}" class="card-img-top" alt="..." width="400" height="300">
+                    <div class="card-body">
+		                <h6>Uploaded  at {{ x.datetime }}</h6>
+		                <h6 style="color: red">Title : {{ x.title }}</h6>
+		                <h6 style="color: red">Organizer : {{ x.organizer }}</h6>
+		                <h6 style="color: red">Location : {{ x.location }}</h6>
+		                <form action="{% url 'like_post' %}" method="post" class="ui form">
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" value="{{ x.id }}">
+                            {% if user not in x.liked.all %}
+                                 <button type="submit" style="border: white;background-color: white">
+                                 <a href="" class="like" style="color: lavender;font-size: 200%">
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                </a>
+                                </button>
+                            {% else %}
+                                <button type="submit" style="border: white;background-color: white">
+                                <a href="" class="like" style="color: red;font-size: 200%">
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                </a>
+                                </button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+             {% endif %}
+            {% endfor %}
+
+        </div>
+    {% else %}
+                <h6 style="margin-left: 13%;padding-top: 2%;font-family: 'Lemonada', cursive;color: red">No Liked events</h6>
+    {% endif %}
+
+
+{% endblock %}

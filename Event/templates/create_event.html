@@ -1,0 +1,53 @@
+{% extends 'basic.html' %}
+{% block title %}Create Event{% endblock %}
+{% block body %}
+{% load static %}
+ {% if mess %}
+    <script>
+        Swal.fire({
+             icon: 'error',
+             title: 'Oops...',
+             text: '{{ mess }}',
+        })
+    </script>
+ {% endif %}
+ {% if messages %}
+    {% for x in messages %}
+    <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title:'{{ x }}',
+            showConfirmButton: false,
+            timer: 1500
+            })
+    </script>
+    {% endfor %}
+{% endif %}
+        <h2 style="margin-left: 13%;padding-top: 2%;font-family: 'Lemonada', cursive;color: red">Create an Event</h2>
+        <div class="container my-3" style="padding-top: 1%">
+    <form method="post" action="{% url 'create_event' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group" >
+            <label for="exampleInputEmail1" style="font-weight: bold">Image : ( Associated With Your Article)</label>
+            <input type="file" class="form-control" id="exampleInputEmail1"  name="image" required>
+        </div>
+        <div class="form-group" >
+            <label for="exampleInputEmail1" style="font-weight: bold">Title:</label>
+            <input  class="form-control" id="exampleInputEmail1"  name="title" required />
+        </div>
+        <div class="form-group" >
+            <label for="exampleInputEmail1" style="font-weight: bold">Organizer:</label>
+            <input  class="form-control" id="exampleInputEmail1"  name="organizer" required />
+        </div>
+        <div class="form-group" >
+            <label for="exampleInputEmail1" style="font-weight: bold">Location:</label>
+            <input  class="form-control" id="exampleInputEmail1"  name="location" required />
+        </div>
+        <div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+    </div>
+
+{% endblock %}
